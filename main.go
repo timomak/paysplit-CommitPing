@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 	"github.com/nlopes/slack"
@@ -44,10 +45,14 @@ func main() {
 			fmt.Println("Message received")
 			// newMessage := "A commit has just been made to tsukudabuddha/paysplit"
 			release := payload.(github.PushPayload)
+
 			newMessage := string(release.Pusher.Name) + ": " + string(release.HeadCommit.Message) + "\nRepo: " + string(release.Repository.FullName) + "\nURL: " + string(release.Repository.HTMLURL)
 
 			// fmt.Println("Release:", release)
-			// fmt.Printf("%+v", release)
+			fmt.Printf("%+v", release.Ref)
+			if strings.Contains(release.Ref, "master") == true {
+				fmt.Printf("Is Master")
+			}
 			slackIt(newMessage, "paysplit-devs") // Message, Channel Name
 		}
 
