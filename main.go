@@ -44,7 +44,7 @@ func main() {
 			fmt.Println("Message received")
 			// newMessage := "A commit has just been made to tsukudabuddha/paysplit"
 			release := payload.(github.PushPayload)
-			newMessage := "**" + string(release.Pusher.Name) + "**: " + string(release.HeadCommit.Message) + "\n**Repo**:" + string(release.Repository.FullName) + "\n**URL**: " + string(release.Repository.HTMLURL)
+			newMessage := string(release.Pusher.Name) + ": " + string(release.HeadCommit.Message) + "\nRepo: " + string(release.Repository.FullName) + "\nURL: " + string(release.Repository.HTMLURL)
 
 			// fmt.Println("Release:", release)
 			// fmt.Printf("%+v", release)
@@ -64,4 +64,4 @@ func slackIt(message, channel string) {
 	NotifySlackChannel(slackClient, message, channel)
 }
 
-// PUSHING!psl
+// Finished.
