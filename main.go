@@ -47,6 +47,7 @@ func main() {
 			// newMessage := string(release.Pusher.Name) + " just made a commit to the " + string(release.Repository.FullName) + " repo.\nLook at the changes: " + string(release.Repository.HTMLURL) + "\n"
 
 			fmt.Println("Release:", release)
+			fmt.Printf("%+v", release)
 			slackIt(newMessage, "paysplit-devs") // Message, Channel Name
 		}
 
