@@ -44,7 +44,7 @@ func main() {
 			fmt.Println("Message received")
 			// newMessage := "A commit has just been made to tsukudabuddha/paysplit"
 			release := payload.(github.PushPayload)
-			newMessage := string(release.Pusher.Name) + " just made a commit to the " + string(release.Repository.FullName) + " repo.\nLook at the changes: " + string(release.Repository.HTMLURL) + "Message:" + string(release.HeadCommit.Message) + "\n"
+			newMessage := "**" + string(release.Pusher.Name) + "**: " + string(release.HeadCommit.Message) + "\n**Repo**:" + string(release.Repository.FullName) + "\n**URL**: " + string(release.Repository.HTMLURL)
 
 			// fmt.Println("Release:", release)
 			// fmt.Printf("%+v", release)
