@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -32,7 +31,7 @@ func main() {
 	hook, _ := github.New(github.Options.Secret(string(os.Getenv("WEBHOOK")))) // Secret for Webhook.
 	e := echo.New()
 	e.POST("/push", func(c echo.Context) error {
-		fmt.Println("PUSH route called.")
+		// fmt.Println("PUSH route called.")
 		payload, err := hook.Parse(c.Request(), github.PushEvent)
 		if err != nil {
 			if err == github.ErrEventNotFound {
@@ -42,18 +41,19 @@ func main() {
 		switch payload.(type) {
 
 		case github.PushPayload:
-			fmt.Println("Message received")
+			// fmt.Println("Message received")
 			// newMessage := "A commit has just been made to tsukudabuddha/paysplit"
 			release := payload.(github.PushPayload)
 
-			newMessage := string(release.Pusher.Name) + ": " + string(release.HeadCommit.Message) + "\nRepo: " + string(release.Repository.FullName) + "\nURL: " + string(release.Repository.HTMLURL)
+			newMessage := "A Teammate made a commit on a master branch.\n" + string(release.Pusher.Name) + ": " + string(release.HeadCommit.Message) + "\nRepo: " + string(release.Repository.FullName) + "\nURL: " + string(release.Repository.HTMLURL)
 
 			// fmt.Println("Release:", release)
-			fmt.Printf("%+v", release.Ref)
-			if strings.Contains(release.Ref, "master") == true {
-				fmt.Printf("Is Master!")
+			// fmt.Printf("%+v", release.Ref)
+			if strings.Contains(release.Ref, "master") == true || strings.Contains(release.Ref, "dev") { // Filter for commits made on master.
+				// fmt.Printf("Is Master!")
+				slackIt(newMessage, "paysplit-devs") // Message, Channel Name
 			}
-			slackIt(newMessage, "paysplit-devs") // Message, Channel Name
+			// slackIt(newMessage, "paysplit-devs") // Message, Channel Name
 		}
 
 		return c.String(http.StatusOK, "Success.")
