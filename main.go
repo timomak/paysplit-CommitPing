@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 
@@ -30,6 +31,7 @@ func main() {
 	hook, _ := github.New(github.Options.Secret(string(os.Getenv("WEBHOOK")))) // Secret for Webhook.
 	e := echo.New()
 	e.POST("/push", func(c echo.Context) error {
+		fmt.Println("PUSH route called.")
 		payload, err := hook.Parse(c.Request(), github.PushEvent)
 		if err != nil {
 			if err == github.ErrEventNotFound {
@@ -39,6 +41,7 @@ func main() {
 		switch payload.(type) {
 
 		case github.PushPayload:
+			fmt.Println("Message received")
 			newMessage := "A commit has just been made to tsukudabuddha/paysplit"
 			// release := payload.(github.PushPayload)
 			// newMessage := string(release.Pusher.Name) + " just made a commit to the " + string(release.Repository.FullName) + " repo.\nLook at the changes: " + string(release.Repository.HTMLURL) + "\n"
