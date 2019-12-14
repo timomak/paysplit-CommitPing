@@ -42,12 +42,12 @@ func main() {
 
 		case github.PushPayload:
 			fmt.Println("Message received")
-			newMessage := "A commit has just been made to tsukudabuddha/paysplit"
+			// newMessage := "A commit has just been made to tsukudabuddha/paysplit"
 			release := payload.(github.PushPayload)
-			// newMessage := string(release.Pusher.Name) + " just made a commit to the " + string(release.Repository.FullName) + " repo.\nLook at the changes: " + string(release.Repository.HTMLURL) + "\n"
+			newMessage := string(release.Pusher.Name) + " just made a commit to the " + string(release.Repository.FullName) + " repo.\nLook at the changes: " + string(release.Repository.HTMLURL) + "Message:" + string(release.HeadCommit.Message) + "\n"
 
-			fmt.Println("Release:", release)
-			fmt.Printf("%+v", release)
+			// fmt.Println("Release:", release)
+			// fmt.Printf("%+v", release)
 			slackIt(newMessage, "paysplit-devs") // Message, Channel Name
 		}
 
