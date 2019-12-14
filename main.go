@@ -51,7 +51,7 @@ func main() {
 			// fmt.Println("Release:", release)
 			fmt.Printf("%+v", release.Ref)
 			if strings.Contains(release.Ref, "master") == true {
-				fmt.Printf("Is Master")
+				fmt.Printf("Is Master!")
 			}
 			slackIt(newMessage, "paysplit-devs") // Message, Channel Name
 		}
