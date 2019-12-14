@@ -46,7 +46,7 @@ func main() {
 			release := payload.(github.PushPayload)
 			// newMessage := string(release.Pusher.Name) + " just made a commit to the " + string(release.Repository.FullName) + " repo.\nLook at the changes: " + string(release.Repository.HTMLURL) + "\n"
 
-			fmt.Println("%+v just made a commit to the %+v repo.\nLook at the changes: %+v\n", release.Pusher.Name, release.Repository.FullName, release.Repository.HTMLURL)
+			fmt.Println("Release:", release)
 			slackIt(newMessage, "paysplit-devs") // Message, Channel Name
 		}
 
